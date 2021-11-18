@@ -19,6 +19,9 @@ get_machine_arch(){
         "arm64")
         echo "linux/arm64"
         ;;
+        "aarch64")
+        echo "linux/arm64"
+        ;;
         *)
         return 1
         ;;
@@ -45,6 +48,10 @@ fi
 set -e
 
 DOCKER_PLATFORM=${DOCKER_PLATFORM:-"$(get_env_arch)"}
+if [ "$CI" != "true" ]; then
+    DOCKER_PLATFORM="$(get_machine_arch)"
+fi
+
 CI_IMAGE_ARCH=${CI_IMAGE_ARCH:-"$(get_machine_arch)"}
 
 
