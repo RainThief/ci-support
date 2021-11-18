@@ -1,0 +1,28 @@
+name: CI Support
+
+
+on:
+  push:
+    branches:
+      - "*"
+
+
+env:
+  CI: true
+  DOCKER_USER: ${{ github.actor }}
+  DOCKER_PASS: ${{ secrets.GHCR_TOKEN }}
+  DOCKER_REG: ghcr.io
+  GITHUB_TOKEN: ${{ secrets.GHCR_TOKEN }}
+
+
+jobs:
+
+  static-analysis:
+    name: Static analysis
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Code analysis
+        run: make -s static-analysis
