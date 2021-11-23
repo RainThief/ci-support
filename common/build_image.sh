@@ -65,7 +65,7 @@ else
 fi
 
 # @todo remove when grype available for the sad m1 users :(
-if [ "$(arch)" == "arm64" ]; then SCAN=false; fi
+if [ "$(uname -m)" == "arm64" ]; then SCAN=false; fi
 
 if [ $SCAN == "true" ]; then
     echo_info "scanning image for vulnerabilties"

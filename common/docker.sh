@@ -12,7 +12,7 @@ USE_CACHE=${USE_CACHE:-"true"}
 
 
 get_machine_arch(){
-    case "$(arch)" in
+    case "$(uname -m)" in
         "x86_64")
         echo "linux/amd64"
         ;;
@@ -42,7 +42,7 @@ source "$CI_SUPPORT_ROOT/common/output.sh"
 # check for invalid architectures
 set +e
 if ! get_machine_arch > /dev/null; then
-    echo_danger "your arctitecture '$(arch)' is not supported"
+    echo_danger "your arctitecture '$(uname -m)' is not supported"
     exitonfail 1 "build docker"
 fi
 set -e
