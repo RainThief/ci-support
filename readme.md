@@ -1,11 +1,11 @@
 # CI Support
 
-This project provide common CI functionality in a single place that can be used by all projects.  There are some key principles for this project which are:
+This project provides common CI functionality in a single place that can be used by all projects.  There are some key principles for this project which are:
 
-* CI stages can be ran inside containers to guarantee same result to all user;
+* CI stages can be ran inside containers to guarantee same result to all users;
 * Containers images and scripts must be versioned so that adding new requirements will not break older projects automation;
 * CI stages must be portable so can easily be used on any automation platform [*](#Compatibility);
-* Scripts can be consumable outside container environment to provide flexibility to project and engineers;
+* Scripts can be executed outside container environment to provide flexibility to project and engineers;
 
 ## Requirements
 
@@ -14,13 +14,13 @@ To run CI support you will need
 * [Docker](https://docs.docker.com/get-docker/)
 * Bash
 
-Debian users will need the `qemu-user-static` package to build multi arch images
+Linux users will need `qemu-user-static` package to build multi arch images.
 
 ## Compatibility
 
-It is not practicable to create scripting for different systems. There is a minimal code base in place to build and run stages in containers.  This has been written with bash scripting and tested only on Debian therefore, only stated compatible with Debian and derivatives.
+It is not practicable to create scripting for different systems. There is a minimal code base in place to build and run stages in containers.  This has been written with bash scripting and tested only on Debian therefore, only stated compatible with Debian and derivatives, your mileage will vary with other *nix systems.
 
-Debian has been selected due to its popularity on automation systems and its availability on WSL for Windows users.  It is also free to use and easily accessible.  Users who do not use Debian can easily use Debian within a container or VM to run these scripts.  However, if using these scripts inside a container which will then start its own container, remember to forward the socket.
+Debian has been selected due to its popularity on automation systems and its availability on WSL for Windows users.  It is also free to use and easily accessible.  Users who do not use Debian can easily use Debian within a container run these scripts.  However, if using these scripts inside a container which will then start its own container, remember to forward the socket.
 
 ## Features
 

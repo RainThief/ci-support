@@ -13,9 +13,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # install golangci-lint
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.41.1 \
+RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.43.0 \
   # install nancy
-  && curl -L "https://github.com/sonatype-nexus-community/nancy/releases/download/v1.0.22/nancy-v1.0.22-linux-amd64"  -o "nancy" \
+  && curl -L "https://github.com/sonatype-nexus-community/nancy/releases/download/v1.0.29/nancy-v1.0.29-linux-amd64"  -o "nancy" \
   && chmod +x nancy \
   && mv nancy /usr/local/bin/nancy \
   # install go license checker

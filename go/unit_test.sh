@@ -6,6 +6,8 @@ CI_SUPPORT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}" )" && pwd)/../"
 # shellcheck source=./common/output.sh
 source "$CI_SUPPORT_ROOT/common/output.sh"
 
+mkdir -p "logs"
+
 COVER_REPORT="logs/coverage.out"
 HTML_REPORT="logs/coverage.html"
 
@@ -13,7 +15,7 @@ exit_tests() {
     if [ "$1" -gt 0 ]; then
         rm -f $COVER_REPORT
     fi
-    exitonfail "$1" "unit tests"
+    exitonfail "$1" "$2"
 }
 
 rm -f $HTML_REPORT
@@ -24,6 +26,13 @@ echo "$TEST_OUTPUT" | sed ''/PASS/s//"$(printf "\033[32mPASS\033[0m")"/'' | sed 
 echo_info "coverage report"
 go tool cover -func=$COVER_REPORT -o /dev/stdout
 exit_tests $EXIT "unit tests"
+
+UNCOVERED_FILES="$(echo "$TEST_OUTPUT" | grep "\[no test files\]")"
+
+if [ "$UNCOVERED_FILES" != "" ]; then
+    echo "$UNCOVERED_FILES"
+    exit_tests 1 "uncovered files found"
+fi
 
 if [ "$(echo "$TEST_OUTPUT" | sed -r 's/^.*: ([0-9]{2}).*/\1/')" -lt 80 ]; then
     echo_warning "coverage check failed: coverage report generated at $HTML_REPORT"

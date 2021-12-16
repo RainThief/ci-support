@@ -98,7 +98,6 @@ else
     exitonfail $? "eslint"
 
     if [ "$LINT_SASS" == "true" ]; then
-        echo "00000000000000000000"
         echo_info "linting sass"
         npx stylelint --color --allow-empty-input "**/*.{css,scss,sass}"
         exitonfail $? "Stylelint"
