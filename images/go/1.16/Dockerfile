@@ -27,7 +27,7 @@ WORKDIR /usr/app
 
 FROM golang:1.16-buster
 
-ENV export GOPRIVATE=github.com/organisation/*
+ENV export GOPRIVATE=github.com/rainthief/*
 ENV CGO_ENABLED=1 GOOS=linux
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
