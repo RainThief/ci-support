@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -eo pipefail
+set -euo pipefail
 
 CI_SUPPORT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}" )" && pwd)/../"
 CI=${CI:-"false"}
@@ -9,6 +9,7 @@ CI_IMAGE_NAME_BASE=${CI_IMAGE_NAME_BASE:-"ghcr.io/organisation/ci-support"}
 REPO_NAME="$(basename "$(cd "$PROJECT_ROOT"; git rev-parse --show-toplevel)")"
 DOCKER_PROGRESS=${DOCKER_PROGRESS:-"auto"}
 USE_CACHE=${USE_CACHE:-"true"}
+DOCKER_BUILD_ARGS=${DOCKER_BUILD_ARGS:-""}
 
 
 get_machine_arch(){
@@ -177,7 +178,6 @@ _build_image() {
 
     setup_builder
 
-
     # do not quote vars used as inline args
     # shellcheck disable=SC2086
     DOCKER_BUILDKIT=1 docker buildx build $ACTION \
@@ -188,6 +188,7 @@ _build_image() {
         $CACHE \
         $CACHES \
         $TARGET \
+        $DOCKER_BUILD_ARGS \
         --secret id=GITHUB_TOKEN,src="$CI_SUPPORT_ROOT/secrets.txt" \
         -t "$IMAGE_NAME" -f "$DOCKERFILE" .
     EXIT=$?

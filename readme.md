@@ -92,6 +92,14 @@ Your scripting needs to export certain environment variables which are
   e.g. for arm `CI_IMAGE_ARCH="linux/arm64"`
   CI images are built in real time when needed so their is not a need to build multi arch unless testing images are compatible.
 
+* `DOCKER_BUILD_ARGS` (optional)  
+  Extra args can be passed to the `build-_image.sh` script via `DOCKER_BUILD_ARGS` to be used at build time
+  for example
+
+  ```bash
+  export DOCKER_BUILD_ARGS="--build-arg HEALTH_CHECK_PORT=8080"
+  ```
+
 ## Creating images
   
 ### Creating and using CI images
