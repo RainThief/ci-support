@@ -1,0 +1,33 @@
+name: CI support release
+
+
+on:
+  release:
+    types: 
+      - published
+
+
+env:
+  CI: true
+  DOCKER_USER: ${{ github.actor }}
+  DOCKER_PASS: ${{ secrets.GHCR_TOKEN }}
+  DOCKER_REG: ghcr.io
+  GITHUB_TOKEN: ${{ secrets.GHCR_TOKEN }}
+
+
+jobs:
+
+  build:
+    name: Build release image
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GHCR_TOKEN }}
+          fetch-depth: 0
+
+      - name: Release
+        run: make -s release
+          
