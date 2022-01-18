@@ -50,7 +50,8 @@ while IFS= read -r DIR; do
     if [ "$CI" == "true" ]; then
         FMT_ARGS="-check -diff -write=false"
     fi
-    if ! RESULT=$(terraform fmt "$FMT_ARGS" -recursive . 2>&1); then
+    # shellcheck disable=SC2086
+    if ! RESULT=$(terraform fmt $FMT_ARGS -recursive . 2>&1); then
         echo "$RESULT"
         echo_warning "please make changes above"
         exitonfail 1 "terrform fmt"

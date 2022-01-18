@@ -23,3 +23,11 @@ check_if_git_repo() {
         fi
     fi
 }
+
+is_main_branch() {
+    BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+    if [[ "$BRANCH" == "$(main_branch)" ]]; then
+        return 0
+    fi
+    return 1
+}

@@ -70,6 +70,9 @@ Your scripting needs to export certain environment variables which are
 * `GITHUB_TOKEN`  
   Dependencies being built into CI images may come from a private repository.  To allow private repos to be used GITHUB_TOKEN must be exported into the environment and it will be passed into each docker build process as a secret.  It will nto remain in the build history or final image so is safe to use.
 
+* `CONVENTIONAL_COMMIT`  
+  Set to `true` to enable semver tag bumping based on [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/)
+
 * `AWS_ACCESS_KEY_ID` (optional)  
   If your pipelines use AWS and or terraform with AWS, you must export this variable
 

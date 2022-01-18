@@ -34,4 +34,12 @@ if [ $(echo "$LICENSES_USED" | wc -l) -gt 1 ]; then
     echo "PLEASE REVIEW LICENSES LISTED ABOVE"
 fi
 
+
+echo_info "running dependency checker"
+pip check
+exitonfail $? "PIP dependency issues; audit"
+pip-check
+exitonfail $? "PIP dependency issues; audit"
+
+
 echo_success "Security audit passed"

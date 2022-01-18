@@ -11,6 +11,11 @@ source "$CI_SUPPORT_ROOT/terraform/include.sh"
 source "$CI_SUPPORT_ROOT/common/output.sh"
 
 
+if [ "$CI" != "true" ]; then
+    exitonfail 1 "Cannot run apply outside of CI; terraform plan"
+fi
+
+
 check_aws_credentials
 exitonfail $? "AWS credentials not set; static analysis"
 
