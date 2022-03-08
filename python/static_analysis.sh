@@ -36,4 +36,9 @@ if [ "$FILES" != "" ]; then
 fi
 
 
+echo_info "running bandit"
+bandit src/main.py
+exitonfail $? "bandit"
+
+
 echo_success "Python static analysis passed"

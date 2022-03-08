@@ -6,10 +6,19 @@ CI=${CI:-"false"}
 DIFF_LINT=${DIFF_LINT:-"false"}
 DOCKER_REG=${CI_IMAGE_NAME_BASE:-"ghcr.io"}
 CI_IMAGE_NAME_BASE=${CI_IMAGE_NAME_BASE:-"ghcr.io/rainthief/ci-support"}
-REPO_NAME="$(basename "$(cd "$PROJECT_ROOT"; git rev-parse --show-toplevel)")"
 DOCKER_PROGRESS=${DOCKER_PROGRESS:-"auto"}
 USE_CACHE=${USE_CACHE:-"true"}
 DOCKER_BUILD_ARGS=${DOCKER_BUILD_ARGS:-""}
+
+# shellcheck source=./common/output.sh
+source "$CI_SUPPORT_ROOT/common/output.sh"
+
+# shellcheck source=./common/git.sh
+source "$CI_SUPPORT_ROOT/common/git.sh"
+
+check_if_git_repo
+
+REPO_NAME="$(basename "$(cd "$PROJECT_ROOT"; git rev-parse --show-toplevel)")"
 
 
 get_machine_arch(){
@@ -37,8 +46,6 @@ get_env_arch(){
     get_machine_arch
 }
 
-# shellcheck source=./common/output.sh
-source "$CI_SUPPORT_ROOT/common/output.sh"
 
 # check for invalid architectures
 set +e
@@ -288,6 +295,9 @@ exec_ci_container() {
         $MOUNTS \
         -e CI="$CI" \
         -e DIFF_LINT="$DIFF_LINT" \
+        -e AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID:-""}" \
+        -e AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY:-""}" \
+        -e AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:-""}" \
         --network=host \
         "$CI_IMAGE_NAME" "$CMD" "$@"
 }

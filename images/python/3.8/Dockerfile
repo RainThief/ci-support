@@ -23,7 +23,9 @@ RUN pip install --no-cache-dir \
   'pytest>=6.1.0,<6.2.0' \
   'safety>=1.9.0,<2.0.0' \
   'pip-licenses>=3.3.0,<3.4.0' \
-  'coverage>=5.3.0,<5.4.0'
+  'coverage>=5.3.0,<5.4.0' \
+  'bandit>=1.7.0,<1.8.0' \
+  'pip-check>=2.7.0,<2.8.0'
 
 COPY requirements.txt requirements.txt
 

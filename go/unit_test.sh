@@ -2,6 +2,7 @@
 set -uo pipefail
 
 CI_SUPPORT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}" )" && pwd)/../"
+SKIP_UNCOVERED=${SKIP_UNCOVERED:-"false"}
 
 # shellcheck source=./common/output.sh
 source "$CI_SUPPORT_ROOT/common/output.sh"
@@ -29,7 +30,7 @@ exit_tests $EXIT "unit tests"
 
 UNCOVERED_FILES="$(echo "$TEST_OUTPUT" | grep "\[no test files\]")"
 
-if [ "$UNCOVERED_FILES" != "" ]; then
+if [ "$UNCOVERED_FILES" != "" ]  && [ "$SKIP_UNCOVERED" == "false" ]; then
     echo "$UNCOVERED_FILES"
     exit_tests 1 "uncovered files found"
 fi
